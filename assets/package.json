@@ -1,0 +1,13 @@
+{
+  "name": null,
+  "version": "0.0.0",
+  "description": null,
+  "author": "Caleb Meredith <calebmeredith8@gmail.com>",
+  "license": "MIT",
+  "keywords": null,
+  "main": "index.js",
+  "files": ["dist"],
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}

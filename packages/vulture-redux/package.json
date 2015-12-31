@@ -1,0 +1,24 @@
+{
+  "name": "vulture-redux",
+  "version": "0.0.0",
+  "description": "Redux bindings for vulture",
+  "author": "Caleb Meredith <calebmeredith8@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "vulture",
+    "redux"
+  ],
+  "main": "index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "vulture": "^2.2.4"
+  },
+  "devDependencies": {
+    "jsdom": "^7.2.2",
+    "redux": "^3.0.5"
+  }
+}
