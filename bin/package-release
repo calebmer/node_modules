@@ -60,10 +60,8 @@ package-build
 
 node -e "var fs = require('fs'); var pkg = require('$PWD/package.json'); pkg.version = '$VERSION'; fs.writeFileSync('$PWD/package.json', JSON.stringify(pkg, null, 2));"
 
-git add package.json
-
-git commit -m "$(basename $(pwd)) v${VERSION}"
-
-git push origin master
-
 npm publish
+
+git add package.json
+git commit -m "$(basename $(pwd)) v${VERSION}"
+git push origin master
