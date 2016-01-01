@@ -1,6 +1,6 @@
 {
   "name": "vulture-redux",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Redux bindings for vulture",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
