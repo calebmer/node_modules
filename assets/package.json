@@ -4,6 +4,7 @@
   "description": null,
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
+  "repository": "https://github.com/babel/babel/tree/master/packages/",
   "keywords": null,
   "main": "index.js",
   "files": ["dist"],
