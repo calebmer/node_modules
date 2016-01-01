@@ -58,7 +58,7 @@ git checkout master
 package-test
 package-build
 
-node -e "var fs = require('fs'); var pkg = require('$PWD/package.json'); pkg.version = '$VERSION'; fs.writeFileSync('$PWD/package.json', JSON.stringify(pkg, null, 2));"
+node -e "var fs = require('fs'); var pkg = require('$PWD/package.json'); pkg.version = '$VERSION'; fs.writeFileSync('$PWD/package.json', JSON.stringify(pkg, null, 2) + '\n');"
 
 npm publish
 
