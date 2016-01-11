@@ -5,7 +5,13 @@ const attributesProperty = 'attributes'
 const childrenProperty = 'children'
 
 export default function ({ types: t }) {
-  const transformOnType = transforms => node => (transforms[node.type] || (() => { throw new Error(`${node.type} could not be transformed`) }))(node)
+  const transformOnType = transforms => node => {
+    const transformer = transforms[node.type]
+    if (transformer) {
+      return transformer(node)
+    }
+    throw new Error(`${node.type} could not be transformed`)
+  }
 
   const JSXIdentifier = node => t.stringLiteral(node.name)
 
@@ -76,14 +82,13 @@ export default function ({ types: t }) {
     else if (objects.length === 1) {
       return objects[0]
     }
-    else {
-      return (
-        t.callExpression(
-          file.addHelper('extends'),
-          objects
-        )
+
+    return (
+      t.callExpression(
+        file.addHelper('extends'),
+        objects
       )
-    }
+    )
   }
 
   const JSXText = node => t.stringLiteral(node.value.replace(/\s+/g, ' '))
