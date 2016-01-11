@@ -7,7 +7,12 @@
   "repository": "https://github.com/calebmer/node-packages/tree/master/packages/babel-plugin-transform-jsx",
   "keywords": [
     "jsx",
-    "babel-plugin"
+    "babel-plugin",
+    "transform",
+    "open",
+    "standard",
+    "plugin",
+    "babel"
   ],
   "main": "index.js",
   "files": [
