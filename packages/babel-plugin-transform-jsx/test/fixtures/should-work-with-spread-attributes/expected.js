@@ -1,12 +1,12 @@
 var objectA = { x1: 1, y1: 2, z1: 3 };
 var objectB = { x2: 1, y2: 2, z2: 3 };
 var jsxA = {
-  element: "div",
+  elementName: "div",
   attributes: babelHelpers.extends({}, objectA),
   children: []
 };
 var jsxB = {
-  element: "div",
+  elementName: "div",
   attributes: babelHelpers.extends({
     a: 1,
     b: 2
@@ -14,7 +14,7 @@ var jsxB = {
   children: []
 };
 var jsxC = {
-  element: "div",
+  elementName: "div",
   attributes: babelHelpers.extends({}, objectA, {
     a: 1,
     b: 2
@@ -22,7 +22,7 @@ var jsxC = {
   children: []
 };
 var jsxD = {
-  element: "div",
+  elementName: "div",
   attributes: babelHelpers.extends({
     a: 1
   }, objectA, {
@@ -31,7 +31,7 @@ var jsxD = {
   children: []
 };
 var jsxE = {
-  element: "div",
+  elementName: "div",
   attributes: babelHelpers.extends({
     a: 1
   }, objectA, objectB, {
@@ -40,7 +40,7 @@ var jsxE = {
   children: []
 };
 var jsxF = {
-  element: "div",
+  elementName: "div",
   attributes: babelHelpers.extends({
     a: 1
   }, objectA, {

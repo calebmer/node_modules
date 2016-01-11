@@ -10,12 +10,17 @@
     "babel-plugin"
   ],
   "main": "index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {},
   "dependencies": {
     "babel-plugin-syntax-jsx": "^6.3.13",
     "babel-runtime": "^5.0.0",
     "esutils": "^2.0.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-core": "^6.4.0",
+    "babel-plugin-external-helpers": "^6.4.0"
+  }
 }

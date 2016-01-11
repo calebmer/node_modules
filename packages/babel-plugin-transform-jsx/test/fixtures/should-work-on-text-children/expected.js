@@ -1,5 +1,5 @@
 var jsx = {
-  element: "div",
+  elementName: "div",
   attributes: {},
   children: [" Hello, world! Hello world, again. And one more time. "]
 };

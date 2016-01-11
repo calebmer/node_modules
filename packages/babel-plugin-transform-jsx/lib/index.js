@@ -5,7 +5,7 @@ const attributesProperty = 'attributes'
 const childrenProperty = 'children'
 
 export default function ({ types: t }) {
-  const transformOnType = transforms => node => (transforms[node.type] || () => { throw new Error(`${node.type} could not be transformed`) })(node)
+  const transformOnType = transforms => node => (transforms[node.type] || (() => { throw new Error(`${node.type} could not be transformed`) }))(node)
 
   const JSXIdentifier = node => t.stringLiteral(node.name)
 

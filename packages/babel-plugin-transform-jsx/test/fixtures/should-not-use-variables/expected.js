@@ -1,17 +1,17 @@
 var Variable = true;
 
 var jsxA = {
-  element: "Variable",
+  elementName: "Variable",
   attributes: {},
   children: null
 };
 var jsxB = {
-  element: "Variable",
+  elementName: "Variable",
   attributes: {},
   children: []
 };
 var jsxC = {
-  element: "Variable",
+  elementName: "Variable",
   attributes: {},
   children: [Variable]
 };
