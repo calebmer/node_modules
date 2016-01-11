@@ -55,6 +55,7 @@ export VERSION=$next_version
 
 git checkout master
 
+package-lint
 package-test
 package-build
 
