@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-jsx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Turn JSX into static objects.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
