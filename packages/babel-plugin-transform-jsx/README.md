@@ -50,7 +50,21 @@ var dropdown = {
 };
 ```
 
-No JSX pragma needed and no `/* @jsx */` comments needed (although it is supported).
+No JSX pragma needed and no `/* @jsx */` comments needed (although constructor functions are supported).
+
+## A JSX Object
+The names of properties in a JSX object are taken directly from the [spec][jsxs]. What the spec may call `JSXElementName`, in an object it is called `elementName` and so on. Currently properties to be expected are:
+
+- `elementName`: A string specifying the JSX element’s name. Most often a string, but might be a variable if it is considered a valid expression by the JSX spec.
+- `attributes`: An object of key/value attributes for the JSX object. Supports spread attributes.
+- `children`: An array of various variables. Most often it will contain strings and JSX objects. If the JSX element was self closing this property will be `null`.
+
+## Options
+This plugin accepts options in the standard babel fashion, such as the following:
+
+- `module`: The module to be imported and default export used to construct JSX objects.
+- `function`: The function name to be used for constructing JSX objects.
+- `useNew`: Instead of calling a constructor function (as defined using an earlier option) use `new`.
 
 ## Examples
 ### Basic
@@ -212,13 +226,6 @@ var object = _jsx({
   ]
 })
 ```
-
-## A JSX Object
-The names of properties in a JSX object are taken directly from the [spec][jsxs]. What the spec may call `JSXElementName`, in an object it is called `elementName` and so on. Currently properties to be expected are:
-
-- `elementName`: A string specifying the JSX element’s name. Most often a string, but might be a variable if it is considered a valid expression by the JSX spec.
-- `attributes`: An object of key/value attributes for the JSX object. Supports spread attributes.
-- `children`: An array of various variables. Most often it will contain strings and JSX objects. If the JSX element was self closing this property will be `null`.
 
 ## Differences with [`babel-plugin-transform-react-jsx`][btrj] and [`babel-plugin-transform-react-inline-elements`][brie]
 
