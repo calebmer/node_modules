@@ -1,3 +1,5 @@
+import identity from 'lodash/utility/identity'
+import ary from 'lodash/function/ary'
 import esutils from 'esutils'
 
 const nameProperty = 'elementName'
@@ -5,6 +7,10 @@ const attributesProperty = 'attributes'
 const childrenProperty = 'children'
 
 export default function ({ types: t }) {
+  /* ==========================================================================
+   * Utilities
+   * ======================================================================= */
+
   const transformOnType = transforms => node => {
     const transformer = transforms[node.type]
     if (transformer) {
@@ -12,6 +18,10 @@ export default function ({ types: t }) {
     }
     throw new Error(`${node.type} could not be transformed`)
   }
+
+  /* ==========================================================================
+   * Node Transformers
+   * ======================================================================= */
 
   const JSXIdentifier = node => t.stringLiteral(node.name)
 
@@ -38,7 +48,7 @@ export default function ({ types: t }) {
     JSXExpressionContainer
   })
 
-  const JSXAttributes = (nodes, file) => {
+  const JSXAttributes = state => nodes => {
     let object = []
     const objects = []
 
@@ -85,7 +95,7 @@ export default function ({ types: t }) {
 
     return (
       t.callExpression(
-        file.addHelper('extends'),
+        state.addHelper('extends'),
         objects
       )
     )
@@ -93,21 +103,71 @@ export default function ({ types: t }) {
 
   const JSXText = node => t.stringLiteral(node.value.replace(/\s+/g, ' '))
 
-  const JSXChild = file => transformOnType({ JSXText, JSXElement: JSXElement(file), JSXExpressionContainer })
+  const JSXChild = state => transformOnType({ JSXText, JSXElement: JSXElement(state), JSXExpressionContainer })
 
-  const JSXChildren = file => nodes => t.arrayExpression(nodes.map(JSXChild(file)))
+  const JSXChildren = state => nodes => t.arrayExpression(nodes.map(JSXChild(state)))
 
-  const JSXElement = file => node => t.objectExpression([
-    t.objectProperty(t.identifier(nameProperty), JSXElementName(node.openingElement.name)),
-    t.objectProperty(t.identifier(attributesProperty), JSXAttributes(node.openingElement.attributes, file)),
-    t.objectProperty(t.identifier(childrenProperty), node.closingElement ? JSXChildren(file)(node.children) : t.nullLiteral())
-  ])
+  const JSXElement = state => node => state.get('jsxObjectMapper')(
+    t.objectExpression([
+      t.objectProperty(t.identifier(nameProperty), JSXElementName(node.openingElement.name)),
+      t.objectProperty(t.identifier(attributesProperty), JSXAttributes(state)(node.openingElement.attributes)),
+      t.objectProperty(t.identifier(childrenProperty), node.closingElement ? JSXChildren(state)(node.children) : t.nullLiteral())
+    ])
+  )
+
+  /* ==========================================================================
+   * Misc Functions
+   * ======================================================================= */
+
+  const initJSX = (path, state) => {
+    const {
+      opts: {
+        useNew = false,
+        module: constructorModule,
+        function: constructorFunction
+      }
+    } = state
+
+    const executeExpression = useNew ? t.newExpression : t.callExpression
+    const valueWrapper = expression => value => executeExpression(expression, [value])
+
+    if (constructorModule) {
+      const moduleName = path.scope.generateUidIdentifier(useNew ? 'JSXNode' : 'jsx')
+      state.set('jsxObjectMapper', valueWrapper(moduleName))
+
+      const importDeclaration = t.importDeclaration(
+        [t.importDefaultSpecifier(moduleName)],
+        t.stringLiteral(constructorModule)
+      )
+
+      path.findParent(p => p.isProgram()).unshiftContainer('body', importDeclaration)
+    }
+
+    else if (constructorFunction) {
+      const expression = constructorFunction.split('.').map(ary(t.identifier, 1)).reduce(ary(t.memberExpression, 2))
+      state.set('jsxObjectMapper', valueWrapper(expression))
+    }
+
+    else {
+      state.set('jsxObjectMapper', identity)
+    }
+  }
+
+  /* ==========================================================================
+   * Plugin
+   * ======================================================================= */
 
   return {
     inherits: require('babel-plugin-syntax-jsx'),
     visitor: {
-      JSXElement(path, file) {
-        path.replaceWith(JSXElement(file)(path.node))
+      JSXElement(path, state) {
+        if (!state.get('jsxInit')) {
+          initJSX(path, state)
+          state.set('jsxInit', true)
+        }
+
+        // Replace JSX with an object.
+        path.replaceWith(JSXElement(state)(path.node))
       }
     }
   }
