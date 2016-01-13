@@ -249,7 +249,21 @@ function MySecondComponent() {
 }
 ```
 
-…where `MyFirstComponent` was a variable. This is **not** a defined behavior in the [JSX spec][jsxs] and only a React specific feature. Therefore it is not allowed in this plugin. One may however use a member expression which is a defined behavior by the spec. See the following example:
+…where `MyFirstComponent` was a variable. This is **not** a defined behavior in the [JSX spec][jsxs] and only a React specific feature. Therefore it is not allowed in this plugin. Instead it is recommended to just use functions, for example:
+
+```jsx
+import MyFirstComponent from './MyFirstComponent'
+
+function MySecondComponent() {
+  return (
+    <div>
+      {MyFirstComponent()}
+    </div>
+  )
+}
+```
+
+One may however use a member expression which is a defined behavior by the spec. See the following example:
 
 ```jsx
 var foo = {
