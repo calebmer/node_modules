@@ -50,13 +50,13 @@ var dropdown = {
 };
 ```
 
-No JSX pragma needed and no `/* @jsx */` comments needed.
+No JSX pragma needed and no `/* @jsx */` comments needed (although it is supported).
 
 ## Examples
 ### Basic
 #### JSX
 ```jsx
-var jsx = (
+var object = (
   <article>
     <h1>Hello, kitten!</h1>
     <img href="http://placekitten.com/200/300" alt="A cute kitten"/>
@@ -67,7 +67,7 @@ var jsx = (
 
 #### JavaScript
 ```js
-var jsx = {
+var object = {
   elementName: 'article',
   attributes: {},
   children: [
@@ -99,7 +99,7 @@ var foo = {
   buz: 2
 }
 
-var jsx = <div hello="world" {...foo} goodbye="moon">Nice!</div>
+var object = <div hello="world" {...foo} goodbye="moon">Nice!</div>
 ```
 
 #### JavaScript
@@ -109,7 +109,7 @@ var foo = {
   buz: 2
 }
 
-var jsx = {
+var object = {
   elementName: 'div',
   attributes: assign({
     hello: 'world'
@@ -125,16 +125,92 @@ Self closing JSX elements work just like self closing HTML elements. As they hav
 
 #### JSX
 ```jsx
-var jsx = <br/>
+var object = <br/>
 ```
 
 #### JavaScript
 ```js
-var jsx = {
+var object = {
   elementName: 'br',
   attributes: {},
   children: null
 }
+```
+
+### Constructor Function
+If you want your JSX object to have a constructor function use Babel options to specify a function name.
+
+#### Options
+```json
+{
+  "plugins": [["transform-jsx", { "function": "jsx" }]]
+}
+```
+
+#### JSX
+```jsx
+var object = (
+  <p>
+    <strong>Hello,</strong> world!
+  </p>
+)
+```
+
+#### JavaScript
+```js
+var object = jsx({
+  elementName: 'p',
+  attributes: {},
+  children: [
+    jsx({
+      elementName: 'string',
+      attributes: {},
+      children: ['Hello,']
+    }),
+    ' world!'
+  ]
+})
+```
+
+### Constructor Module
+Sometimes it is annoying to have to import your constructor function in every file, so this plugin provides a way to automagically import your constructor function.
+
+A couple things to consider: First, instead of using the NodeJS only `require` function this plugin adds an ES2015 module import declaration. So in a `import … from '…'` format. Therefore, you will also need a transformation plugin for this style of import if your platform does not support it.
+
+Second, this plugin uses the default export. If you are using CommonJS `module.exports` you should be fine as long as the constructor is the value of `module.exports`.
+
+#### Options
+```json
+{
+  "plugins": [["transform-jsx", { "module": "jsx-module-thing" }]]
+}
+```
+
+#### JSX
+```jsx
+var object = (
+  <p>
+    <strong>Hello,</strong> world!
+  </p>
+)
+```
+
+#### JavaScript
+```js
+import _jsx from 'jsx-module-thing'
+
+var object = _jsx({
+  elementName: 'p',
+  attributes: {},
+  children: [
+    _jsx({
+      elementName: 'string',
+      attributes: {},
+      children: ['Hello,']
+    }),
+    ' world!'
+  ]
+})
 ```
 
 ## A JSX Object
@@ -146,7 +222,7 @@ The names of properties in a JSX object are taken directly from the [spec][jsxs]
 
 ## Differences with [`babel-plugin-transform-react-jsx`][btrj] and [`babel-plugin-transform-react-inline-elements`][brie]
 
-- No pragma or file import required. No longer is a `createElement` or similar function needed.
+- No more `createElement` or other pragma or file import required (but is supported).
 - No `$$typeof` or other extraneous JSX object information.
 - No `props`, `key`, `ref`, or other specific React lingo.
 - Does not support component element names. See more information below.
