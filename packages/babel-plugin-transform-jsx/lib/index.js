@@ -132,7 +132,7 @@ export default function ({ types: t }) {
     const valueWrapper = expression => value => executeExpression(expression, [value])
 
     if (constructorModule) {
-      const moduleName = path.scope.generateUidIdentifier(useNew ? 'JSXNode' : 'jsx')
+      const moduleName = path.scope.generateUidIdentifier(constructorFunction || useNew ? 'JSXNode' : 'jsx')
       state.set('jsxObjectMapper', valueWrapper(moduleName))
 
       const importDeclaration = t.importDeclaration(
