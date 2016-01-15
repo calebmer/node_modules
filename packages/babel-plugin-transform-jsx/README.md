@@ -227,6 +227,16 @@ var object = _jsx({
 })
 ```
 
+## How to integrate with your framework
+To integrate this JSX method with your framework of choice you must first define a constructor function which takes a single argument (a JSX object) and returns the appropriate format. After that, you could take one of two approaches:
+
+1. Ask users to add your constructor function‘s name to their plugin config under the `function` key and have the user manually bring the constructor function into their file scope (this is comparable to React requiring the `react` module to be required in every file).
+2. Create a file where your constructor function is a default export and ask the user to add the file name to their plugin config under the `module` key. The file name will be imported using ES6 modules so whatever import algorithm specified by the user will be used. At the moment 99.9% of the time that algorithm will be node‘s require algorithm.
+
+   It is recommended to put your file in `jsx.js` at the root of your package so user‘s can use `your-module/jsx` to get your constructor function.
+
+   With this method the user does not need to require your module in every file as this will automatically be done.
+
 ## Differences with [`babel-plugin-transform-react-jsx`][btrj] and [`babel-plugin-transform-react-inline-elements`][brie]
 
 - No more `createElement` or other pragma or file import required (but is supported).
