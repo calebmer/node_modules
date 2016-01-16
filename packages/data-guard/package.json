@@ -22,6 +22,8 @@
     "dist"
   ],
   "scripts": {},
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.0.0"
+  },
   "devDependencies": {}
 }
