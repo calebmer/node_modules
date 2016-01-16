@@ -235,6 +235,21 @@ To integrate this JSX transformer with your framework of choice, you must first 
 
    For the majority of users the algorithm to locate the file will be node‘s standard require algorithm. Therefore, It is recommended to name your file `jsx.js` and place it at the root of your package so user may use `your-module/jsx` to get the constructor function.
 
+### Example `jsx.js` file
+If you are taking the second approach, and you are using the [`virtual-dom`][vdom] library an example `jsx.js` may look as follows:
+
+```js
+var h = require('virtual-dom/h')
+
+module.exports = function jsx(jsxObject) {
+  return h(
+    jsxObject.elementName,
+    jsxObject.attributes,
+    jsxObject.children
+  )
+}
+```
+
 ## Differences with [`babel-plugin-transform-react-jsx`][btrj] and [`babel-plugin-transform-react-inline-elements`][brie]
 
 - No more `createElement` or other pragma or file import required (but is supported).
@@ -298,3 +313,4 @@ Thanks and enjoy 👍
 [btrj]: https://www.npmjs.com/package/babel-plugin-transform-react-jsx
 [brie]: https://www.npmjs.com/package/babel-plugin-transform-react-inline-elements
 [twcm]: https://twitter.com/calebmer
+[vdom]: https://www.npmjs.com/package/virtual-dom
