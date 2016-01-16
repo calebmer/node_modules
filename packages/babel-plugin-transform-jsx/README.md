@@ -241,7 +241,7 @@ If you are taking the second approach, and you are using the [`virtual-dom`][vdo
 ```js
 var h = require('virtual-dom/h')
 
-module.exports = function jsx (jsxObject) {
+module.exports = function jsx(jsxObject) {
   return h(
     jsxObject.elementName,
     jsxObject.attributes,
