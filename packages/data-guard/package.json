@@ -1,6 +1,6 @@
 {
   "name": "data-guard",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A data validation library for any use case.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
