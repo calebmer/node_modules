@@ -13,7 +13,10 @@ const createValidate = ({ strict = false } = {}) => (validator, maybeValue) => {
           throw new Error(Messages.create(name, path, value))
         })
       )
-      return result.success
+      if (!result.success) {
+        throw new Error('Validation failed for unknown reasons.')
+      }
+      return true
     }
 
     return result
