@@ -1,6 +1,6 @@
 const ValidationContext = require('./ValidationContext')
 
-function createObjectValidator(shape) {
+function createObjectValidator (shape) {
   return object => {
     if (!object) {
       return false

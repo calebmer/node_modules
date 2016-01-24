@@ -14,10 +14,10 @@ const Messages = {
     items: () => `Some of the item are invalid`,
     match: value => `${getValue(value)} failed its regular expression test`,
     enum: value => `${getValue(value)} is not one of the defined values`,
-    instanceOf: value => `${getValue(value)} is not an instance of the defined constructor`,
+    instanceOf: value => `${getValue(value)} is not an instance of the defined constructor`
   },
 
-  create(name, path, value) {
+  create (name, path, value) {
     const messageCreator = this.creators[name]
     if (messageCreator) {
       return `${messageCreator(value)} @ ${path}`
@@ -29,10 +29,10 @@ const Messages = {
 
 module.exports = Messages
 
-function getValue(value) {
+function getValue (value) {
   return isString(value) ? `"${value}"` : value.toString()
 }
 
-function getType(value) {
+function getType (value) {
   return isArray(value) ? 'array' : typeof value
 }

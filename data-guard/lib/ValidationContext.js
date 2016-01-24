@@ -3,12 +3,12 @@ const ValidationContext = {
   stack: [],
   details: [],
 
-  head() {
+  head () {
     const { stack } = this
     return stack.length === 0 ? null : stack[stack.length - 1]
   },
 
-  runValidation(validation) {
+  runValidation (validation) {
     const { stack, details } = this
 
     const detail = createDetail()
@@ -31,7 +31,7 @@ const ValidationContext = {
     }
   },
 
-  run(name, callback) {
+  run (name, callback) {
     const { stack, details } = this
 
     // We can not run a named context as root.
@@ -48,14 +48,14 @@ const ValidationContext = {
     return result
   },
 
-  setValue(value) {
+  setValue (value) {
     const head = this.head()
     if (head) {
       head.value = value
     }
   },
 
-  addError(error) {
+  addError (error) {
     const head = this.head()
     if (head) {
       head.errors.push(error)
@@ -65,7 +65,7 @@ const ValidationContext = {
 
 module.exports = ValidationContext
 
-function createDetail(path = '') {
+function createDetail (path = '') {
   return {
     path,
     errors: []

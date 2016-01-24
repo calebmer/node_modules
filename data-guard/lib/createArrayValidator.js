@@ -1,6 +1,6 @@
 const ValidationContext = require('./ValidationContext')
 
-function createArrayValidator(validator) {
+function createArrayValidator (validator) {
   return array => {
     if (!array) {
       return false

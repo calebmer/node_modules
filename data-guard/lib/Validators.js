@@ -4,7 +4,6 @@ const isString = require('lodash/isString')
 const isObject = require('lodash/isObjectLike')
 const isArray = require('lodash/isArrayLikeObject')
 const isFunction = require('lodash/isFunction')
-const assign = require('lodash/assign')
 const mapValues = require('lodash/mapValues')
 const flow = require('lodash/flow')
 const normalizeValidator = require('./normalizeValidator')
@@ -32,7 +31,7 @@ const Validators = mapValues({
 
 module.exports = Validators
 
-function transformToReportError(createValidator, name) {
+function transformToReportError (createValidator, name) {
   return (...args) => {
     const validator = createValidator(...args)
     return value => {

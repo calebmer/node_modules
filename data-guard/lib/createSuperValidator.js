@@ -2,7 +2,7 @@ const assign = require('lodash/assign')
 const mapValues = require('lodash/mapValues')
 const Validators = require('./Validators')
 
-function createSuperValidator(validators = []) {
+function createSuperValidator (validators = []) {
   const superValidator = value => (
     validators.reduce((success, validator) => validator(value) && success, true)
   )

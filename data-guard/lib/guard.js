@@ -3,7 +3,7 @@ const validate = require('./validate')
 
 const unknownValidationMessage = 'Validation failed for unknown reasons'
 
-const createGuard = ({ strict = false } = {}) => (...validators) => func => function guardedFunction(...args) {
+const createGuard = ({ strict = false } = {}) => (...validators) => func => function guardedFunction (...args) {
   const funcName = func.name
 
   for (const index in validators) {
@@ -25,7 +25,7 @@ const createGuard = ({ strict = false } = {}) => (...validators) => func => func
         if (strict) {
           throw new Error(unknownValidationMessage)
         } else {
-          console.warn(unknownValidation)
+          console.warn(unknownValidationMessage)
         }
       }
     }
