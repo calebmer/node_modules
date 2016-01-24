@@ -1,11 +1,11 @@
 {
-  "name": null,
+  "name": "$1",
   "version": "0.0.0",
   "description": null,
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/calebmer/node_modules/tree/master/",
-  "keywords": null,
+  "repository": "https://github.com/calebmer/node_modules/tree/master/$1",
+  "keywords": [],
   "main": "index.js",
   "files": [
     "index.js",
