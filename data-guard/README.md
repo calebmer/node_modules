@@ -148,4 +148,4 @@ The validators bundled with `data-guard` by default are:
 If there is another low level validator you would like to see, please open an issue or submit a PR!
 
 ## Credits
-If you use and enjoy this .odule, the best way to show your gratitude is to follow me, [`@calebmer`](https://twitter.com/calebmer), on Twitter.
+If you use and enjoy this module, the best way to show your gratitude is to follow me, [`@calebmer`](https://twitter.com/calebmer), on Twitter.
