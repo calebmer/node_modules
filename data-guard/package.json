@@ -4,7 +4,7 @@
   "description": "A data validation library for any use case.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/calebmer/node_modules/tree/master/packages/data-guard",
+  "repository": "https://github.com/calebmer/node_modules/tree/master/data-guard",
   "keywords": [
     "data",
     "validation",

@@ -4,7 +4,7 @@
   "description": "Redux bindings to vulture.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/calebmer/node_modules/tree/master/packages/vulture-redux",
+  "repository": "https://github.com/calebmer/node_modules/tree/master/vulture-redux",
   "keywords": [
     "vulture",
     "redux"

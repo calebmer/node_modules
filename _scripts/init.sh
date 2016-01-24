@@ -1,6 +1,6 @@
 #!/bin/bash
 
-assets=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/../assets
+assets=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/../_assets
 cwd=$(pwd)
 
 cp $assets/.env $cwd/.env

@@ -3,7 +3,7 @@
 name=$1
 root=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/..
 
-cd $root/packages
+cd $root
 
 mkdir $1
 
