@@ -56,13 +56,13 @@ export VERSION=$next_version
 
 git checkout master
 
-$scripts/lint.sh
-$scripts/test.sh
-$scripts/build.sh
+$scripts/lint.sh || exit 1
+$scripts/test.sh || exit 1
+$scripts/build.sh || exit 1
 
 node -e "var fs = require('fs'); var pkg = require('$PWD/package.json'); pkg.version = '$VERSION'; fs.writeFileSync('$PWD/package.json', JSON.stringify(pkg, null, 2) + '\n');"
 
-npm publish
+npm publish || exit 1
 
 git add package.json
 git commit -m "$(basename $(pwd)) v${VERSION}"
