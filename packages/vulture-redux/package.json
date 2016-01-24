@@ -1,11 +1,14 @@
 {
   "name": "vulture-redux",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Redux bindings to vulture.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
   "repository": "https://github.com/calebmer/node_modules/tree/master/packages/vulture-redux",
-  "keywords": ["vulture", "redux"],
+  "keywords": [
+    "vulture",
+    "redux"
+  ],
   "main": "index.js",
   "files": [
     "index.js",
