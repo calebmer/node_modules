@@ -22,8 +22,8 @@
   "scripts": {},
   "dependencies": {
     "babel-plugin-syntax-jsx": "^6.3.13",
-    "babel-runtime": "^5.0.0",
-    "esutils": "^2.0.2"
+    "esutils": "^2.0.2",
+    "lodash": "^4.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.4.0",

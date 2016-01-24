@@ -1,5 +1,5 @@
-import identity from 'lodash/utility/identity'
-import ary from 'lodash/function/ary'
+import identity from 'lodash/identity'
+import ary from 'lodash/ary'
 import esutils from 'esutils'
 
 const nameProperty = 'elementName'
