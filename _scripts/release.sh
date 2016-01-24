@@ -2,6 +2,7 @@
 
 bold=$(tput bold)
 normal=$(tput sgr0)
+scripts=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
 
 if [ ! -f package.json ]; then
   echo "Current working directory is not a node package!"
@@ -55,9 +56,9 @@ export VERSION=$next_version
 
 git checkout master
 
-package-lint
-package-test
-package-build
+$scripts/lint.sh
+$scripts/test.sh
+$scripts/build.sh
 
 node -e "var fs = require('fs'); var pkg = require('$PWD/package.json'); pkg.version = '$VERSION'; fs.writeFileSync('$PWD/package.json', JSON.stringify(pkg, null, 2) + '\n');"
 
