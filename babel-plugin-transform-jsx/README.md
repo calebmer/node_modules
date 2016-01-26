@@ -65,6 +65,7 @@ This plugin accepts options in the standard babel fashion, such as the following
 - `module`: The module to be imported and default export used to construct JSX objects.
 - `function`: The function name to be used for constructing JSX objects.
 - `useNew`: Instead of calling a constructor function (as defined using an earlier option) use `new`.
+- `useVariables`: Allow elements to reference variables, enabling component element names. When set to `true`, element names with an uppercase letter from A to Z are treated as variables. When set to a regular expression pattern, matching names are treated as variables.
 
 ## Examples
 ### Basic
@@ -227,6 +228,75 @@ var object = _jsx({
 })
 ```
 
+### Component Element Names
+
+With the React JSX transformer one might do the following:
+
+```jsx
+import MyFirstComponent from './MyFirstComponent'
+
+function MySecondComponent() {
+  return (
+    <div>
+      <MyFirstComponent/>
+    </div>
+  )
+}
+```
+
+…where `MyFirstComponent` was a variable. This is **not** a defined behavior in the [JSX spec][jsxs] and only a React specific feature. Therefore this plugin does not enable it by default. Instead it is recommended to just use functions, for example:
+
+```jsx
+import MyFirstComponent from './MyFirstComponent'
+
+function MySecondComponent() {
+  return (
+    <div>
+      {MyFirstComponent()}
+    </div>
+  )
+}
+```
+
+In addition, one may use a member expression which is a defined behavior by the spec. See the following example:
+
+```jsx
+var foo = {
+  bar: 'div'
+}
+
+function MyComponent() {
+  return (
+    <div>
+      <foo.bar/>
+    </div>
+  )
+}
+```
+
+In the transformed object instead of having the string `foo.bar` for `elementName`, it would instead reference `foo.bar` the object property.
+
+However, if you want to use component element names as shown in the React example above, you can enable support with the `useVariables` option.
+
+#### Options
+
+To enable component element names with the default naming convention, set `useVariables` to `true`, and element names beginning with an uppercase letter from A to Z will be treated as variables.
+
+```json
+{
+  "plugins": [["transform-jsx", { "useVariables": true }]]
+}
+```
+
+To customize which element names are treated as variables, set `useVariables` to a regular expression pattern. For example, the following indicates element names beginning with a capital Z should be treated as variables.
+
+```json
+{
+  "plugins": [["transform-jsx", { "useVariables": "^Z" }]]
+}
+```
+
+
 ## How to integrate with your framework
 To integrate this JSX transformer with your framework of choice, you must first define a constructor function which takes a single argument (a JSX object) and returns the appropriate format for your framework. After that, you could take one of two approaches:
 
@@ -255,54 +325,8 @@ module.exports = function jsx(jsxObject) {
 - No more `createElement` or other pragma or file import required (but is supported).
 - No `$$typeof` or other extraneous JSX object information.
 - No `props`, `key`, `ref`, or other specific React lingo.
-- Does not support component element names. See more information below.
+- Does not support component element names by default, though support is available via the `useVariables` option.
 
-### No variable element names
-With the React JSX transformer one might do the following:
-
-```jsx
-import MyFirstComponent from './MyFirstComponent'
-
-function MySecondComponent() {
-  return (
-    <div>
-      <MyFirstComponent/>
-    </div>
-  )
-}
-```
-
-…where `MyFirstComponent` was a variable. This is **not** a defined behavior in the [JSX spec][jsxs] and only a React specific feature. Therefore it is not allowed in this plugin. Instead it is recommended to just use functions, for example:
-
-```jsx
-import MyFirstComponent from './MyFirstComponent'
-
-function MySecondComponent() {
-  return (
-    <div>
-      {MyFirstComponent()}
-    </div>
-  )
-}
-```
-
-One may however use a member expression which is a defined behavior by the spec. See the following example:
-
-```jsx
-var foo = {
-  bar: 'div'
-}
-
-function MyComponent() {
-  return (
-    <div>
-      <foo.bar/>
-    </div>
-  )
-}
-```
-
-In the transformed object instead of having the string `foo.bar` for `elementName`, it would instead reference `foo.bar` the object property.
 
 ## Credits
 If you like this plugin, follow me, [`@calebmer`][twcm], on Twitter. It will be great seeing you there and you can get updates of all the stuff I will be doing.

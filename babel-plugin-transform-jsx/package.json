@@ -3,6 +3,11 @@
   "version": "1.1.4",
   "description": "Turn JSX into static objects.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
+  "contributors": [{
+    "name": "Brandon Payton",
+    "email": "brandon@happycode.net",
+    "url": "http://happycode.net"
+  }],
   "license": "MIT",
   "repository": "https://github.com/calebmer/node_modules/tree/master/babel-plugin-transform-jsx",
   "keywords": [
