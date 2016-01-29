@@ -133,10 +133,7 @@ export default function ({ types: t }) {
             }
 
             const attributeName = JSXAttributeName(node.name)
-
-            const objectKey = esutils.keyword.isIdentifierNameES6(attributeName.value) ?
-              t.identifier(attributeName.value) :
-              attributeName
+            const objectKey = esutils.keyword.isIdentifierNameES6(attributeName.value) ? t.identifier(attributeName.value) : attributeName
 
             object.push(t.objectProperty(objectKey, JSXAttributeValue(node.value)))
             break
@@ -161,8 +158,7 @@ export default function ({ types: t }) {
 
       if (objects.length === 0) {
         return t.objectExpression([])
-      }
-      else if (objects.length === 1) {
+      } else if (objects.length === 1) {
         return objects[0]
       }
 
@@ -176,20 +172,17 @@ export default function ({ types: t }) {
 
     const JSXText = node => t.stringLiteral(node.value.replace(/\s+/g, ' '))
 
-    const JSXElement = node => {
+    const JSXElement = node => jsxObjectTransformer(
+      t.objectExpression([
+        t.objectProperty(t.identifier(nameProperty), JSXElementName(node.openingElement.name)),
+        t.objectProperty(t.identifier(attributesProperty), JSXAttributes(node.openingElement.attributes)),
+        t.objectProperty(t.identifier(childrenProperty), node.closingElement ? JSXChildren(node.children) : t.nullLiteral())
+      ])
+    )
 
-      const JSXChild = transformOnType({ JSXText, JSXElement, JSXExpressionContainer })
+    const JSXChild = transformOnType({ JSXText, JSXElement, JSXExpressionContainer })
 
-      const JSXChildren = nodes => t.arrayExpression(nodes.map(JSXChild))
-
-      return jsxObjectTransformer(
-        t.objectExpression([
-          t.objectProperty(t.identifier(nameProperty), JSXElementName(node.openingElement.name)),
-          t.objectProperty(t.identifier(attributesProperty), JSXAttributes(node.openingElement.attributes)),
-          t.objectProperty(t.identifier(childrenProperty), node.closingElement ? JSXChildren(node.children) : t.nullLiteral())
-        ])
-      )
-    }
+    const JSXChildren = nodes => t.arrayExpression(nodes.map(JSXChild))
 
     // Actually replace JSX with an object.
     path.replaceWith(JSXElement(path.node))
