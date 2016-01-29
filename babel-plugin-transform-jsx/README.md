@@ -67,6 +67,29 @@ This plugin accepts options in the standard babel fashion, such as the following
 - `useNew`: Instead of calling a constructor function (as defined using an earlier option) use `new`.
 - `useVariables`: Allow elements to reference variables, enabling component element names. When set to `true`, element names with an uppercase letter from A to Z are treated as variables. When set to a regular expression pattern, matching names are treated as variables.
 
+## How to integrate with your framework
+To integrate this JSX transformer with your framework of choice, you must first define a constructor function which takes a single argument (a JSX object) and returns the appropriate format for your framework. After that, you could take one of two approaches:
+
+1. Ask users to add your constructor function‘s name to their plugin config under the `function` key. The user will need to manually bring the constructor function into every file‘s scope which uses JSX (this is comparable to React requiring the `react` module to be in every file).
+2. Create a file where your constructor function is a default export and ask the user to add the file name to their plugin config under the `module` key. This file will be brought into the JSX file‘s scope using ES6 modules automatically.
+
+   For the majority of users the algorithm to locate the file will be node‘s standard require algorithm. Therefore, It is recommended to name your file `jsx.js` and place it at the root of your package so user may use `your-module/jsx` to get the constructor function.
+
+### Example `jsx.js` file
+If you are taking the second approach, and you are using the [`virtual-dom`][vdom] library an example `jsx.js` may look as follows:
+
+```js
+var h = require('virtual-dom/h')
+
+module.exports = function jsx(jsxObject) {
+  return h(
+    jsxObject.elementName,
+    jsxObject.attributes,
+    jsxObject.children
+  )
+}
+```
+
 ## Examples
 ### Basic
 #### JSX
@@ -260,29 +283,6 @@ var object = {
     },
     ' world!'
   ]
-}
-```
-
-## How to integrate with your framework
-To integrate this JSX transformer with your framework of choice, you must first define a constructor function which takes a single argument (a JSX object) and returns the appropriate format for your framework. After that, you could take one of two approaches:
-
-1. Ask users to add your constructor function‘s name to their plugin config under the `function` key. The user will need to manually bring the constructor function into every file‘s scope which uses JSX (this is comparable to React requiring the `react` module to be in every file).
-2. Create a file where your constructor function is a default export and ask the user to add the file name to their plugin config under the `module` key. This file will be brought into the JSX file‘s scope using ES6 modules automatically.
-
-   For the majority of users the algorithm to locate the file will be node‘s standard require algorithm. Therefore, It is recommended to name your file `jsx.js` and place it at the root of your package so user may use `your-module/jsx` to get the constructor function.
-
-### Example `jsx.js` file
-If you are taking the second approach, and you are using the [`virtual-dom`][vdom] library an example `jsx.js` may look as follows:
-
-```js
-var h = require('virtual-dom/h')
-
-module.exports = function jsx(jsxObject) {
-  return h(
-    jsxObject.elementName,
-    jsxObject.attributes,
-    jsxObject.children
-  )
 }
 ```
 
