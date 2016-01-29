@@ -228,74 +228,40 @@ var object = _jsx({
 })
 ```
 
-### Component Element Names
-
-With the React JSX transformer one might do the following:
-
-```jsx
-import MyFirstComponent from './MyFirstComponent'
-
-function MySecondComponent() {
-  return (
-    <div>
-      <MyFirstComponent/>
-    </div>
-  )
-}
-```
-
-…where `MyFirstComponent` was a variable. This is **not** a defined behavior in the [JSX spec][jsxs] and only a React specific feature. Therefore this plugin does not enable it by default. Instead it is recommended to just use functions, for example:
-
-```jsx
-import MyFirstComponent from './MyFirstComponent'
-
-function MySecondComponent() {
-  return (
-    <div>
-      {MyFirstComponent()}
-    </div>
-  )
-}
-```
-
-In addition, one may use a member expression which is a defined behavior by the spec. See the following example:
-
-```jsx
-var foo = {
-  bar: 'div'
-}
-
-function MyComponent() {
-  return (
-    <div>
-      <foo.bar/>
-    </div>
-  )
-}
-```
-
-In the transformed object instead of having the string `foo.bar` for `elementName`, it would instead reference `foo.bar` the object property.
-
-However, if you want to use component element names as shown in the React example above, you can enable support with the `useVariables` option.
+### Variable Element Names
+The React JSX transformer allows you to use variable names for elements. For example `<MyFirstComponent propA={valueA}/>`. By default, this plugin does not allow that behavior as it is not defined in the [JSX spec][jsxs] and rather a React specific feature. If you would like to use a variable for your component use the `useVariables` option. If it is `true` any JSX element written in PascalCase (first letter is uppercase, A–Z) will be a variable. Otherwise you can use a regular expression string if you want more fine grained control.
 
 #### Options
-
-To enable component element names with the default naming convention, set `useVariables` to `true`, and element names beginning with an uppercase letter from A to Z will be treated as variables.
-
 ```json
 {
   "plugins": [["transform-jsx", { "useVariables": true }]]
 }
 ```
 
-To customize which element names are treated as variables, set `useVariables` to a regular expression pattern. For example, the following indicates element names beginning with a capital Z should be treated as variables.
-
-```json
-{
-  "plugins": [["transform-jsx", { "useVariables": "^Z" }]]
-}
+#### JSX
+```jsx
+var object = (
+  <p>
+    <MyStrong foo="bar">Hello,</MyStrong> world!
+  </p>
+)
 ```
 
+#### JavaScript
+```js
+var object = {
+  elementName: 'p',
+  attributes: {},
+  children: [
+    {
+      elementName: MyStrong,
+      attributes: { foo: 'bar' },
+      children: ['Hello,']
+    },
+    ' world!'
+  ]
+}
+```
 
 ## How to integrate with your framework
 To integrate this JSX transformer with your framework of choice, you must first define a constructor function which takes a single argument (a JSX object) and returns the appropriate format for your framework. After that, you could take one of two approaches:
@@ -322,9 +288,8 @@ module.exports = function jsx(jsxObject) {
 
 ## Differences with [`babel-plugin-transform-react-jsx`][btrj] and [`babel-plugin-transform-react-inline-elements`][brie]
 
-- No more `createElement` or other pragma or file import required (but is supported).
-- No `$$typeof` or other extraneous JSX object information.
-- No `props`, `key`, `ref`, or other specific React lingo.
+- No more `createElement` or other pragma or file import required, but is supported via the `function` and `module` options.
+- No `$$typeof`, `props`, `key`, `ref`, or other specific React lingo.
 - Does not support component element names by default, though support is available via the `useVariables` option.
 
 
