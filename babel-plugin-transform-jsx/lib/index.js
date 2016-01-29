@@ -1,3 +1,4 @@
+import isString from 'lodash/isString'
 import identity from 'lodash/identity'
 import ary from 'lodash/ary'
 import esutils from 'esutils'
@@ -23,50 +24,67 @@ export default function ({ types: t }) {
    * Initial configuration
    * ======================================================================= */
 
-  const initJSX = (path, state) => {
+  const initConfig = (path, state) => {
     const {
-      opts: {
-        useNew = false,
-        module: constructorModule,
-        function: constructorFunction
-      }
-    } = state
+      useNew = false,
+      module: constructorModule,
+      function: constructorFunction,
+      useVariables = false
+    } = state.opts
+
+    let variablesRegex, jsxObjectTransformer
+
+    if (useVariables === true) {
+      // Use the default variables regular expression when true.
+      variablesRegex = /^[A-Z]/
+    } else if (isString(useVariables)) {
+      // If it’s a plain regular expression string.
+      variablesRegex = new RegExp(useVariables)
+    }
 
     const executeExpression = useNew ? t.newExpression : t.callExpression
-    const valueWrapper = expression => value => executeExpression(expression, [value])
+    const jsxObjectTransformerCreator = expression => value => executeExpression(expression, [value])
 
     if (constructorModule) {
-      const moduleName = path.scope.generateUidIdentifier(constructorFunction || useNew ? 'JSXNode' : 'jsx')
-      state.set('jsxObjectMapper', valueWrapper(moduleName))
+      // If the constructor function will be retrieved from a module.
+      const moduleName = path.scope.generateUidIdentifier(useNew ? 'JSXNode' : 'jsx')
+      jsxObjectTransformer = jsxObjectTransformerCreator(moduleName)
 
       const importDeclaration = t.importDeclaration(
         [t.importDefaultSpecifier(moduleName)],
         t.stringLiteral(constructorModule)
       )
 
+      // Add the import declration to the top of the file.
       path.findParent(p => p.isProgram()).unshiftContainer('body', importDeclaration)
-    }
-
-    else if (constructorFunction) {
+    } else if (constructorFunction) {
+      // If the constructor function will be an in scope function.
       const expression = constructorFunction.split('.').map(ary(t.identifier, 1)).reduce(ary(t.memberExpression, 2))
-      state.set('jsxObjectMapper', valueWrapper(expression))
+      jsxObjectTransformer = jsxObjectTransformerCreator(expression)
+    } else {
+      // Otherwise, we won‘t be mapping.
+      jsxObjectTransformer = identity
     }
 
-    else {
-      state.set('jsxObjectMapper', identity)
+    return {
+      variablesRegex,
+      jsxObjectTransformer
     }
   }
 
-  /* ==========================================================================
+  /* =========================================================================
    * Visitors
    * ======================================================================= */
 
   const visitJSXElement = (path, state) => {
+    if (!state.get('jsxConfig')) {
+      state.set('jsxConfig', initConfig(path, state))
+    }
 
-    const { opts } = state
-    const useVariables =
-      (opts.useVariables === true && /^[A-Z]/) ||
-      (typeof opts.useVariables === 'string' && new RegExp(opts.useVariables))
+    const {
+      variablesRegex,
+      jsxObjectTransformer
+    } = state.get('jsxConfig')
 
     /* ==========================================================================
      * Node Transformers
@@ -87,8 +105,8 @@ export default function ({ types: t }) {
     })
 
     const JSXElementName = transformOnType({
-      JSXIdentifier: useVariables
-        ? node => useVariables.test(node.name) ? t.identifier(node.name) : JSXIdentifier(node)
+      JSXIdentifier: variablesRegex
+        ? node => variablesRegex.test(node.name) ? t.identifier(node.name) : JSXIdentifier(node)
         : JSXIdentifier,
       JSXNamespacedName,
       JSXMemberExpression
@@ -164,7 +182,7 @@ export default function ({ types: t }) {
 
       const JSXChildren = nodes => t.arrayExpression(nodes.map(JSXChild))
 
-      return state.get('jsxObjectMapper')(
+      return jsxObjectTransformer(
         t.objectExpression([
           t.objectProperty(t.identifier(nameProperty), JSXElementName(node.openingElement.name)),
           t.objectProperty(t.identifier(attributesProperty), JSXAttributes(node.openingElement.attributes)),
@@ -173,12 +191,7 @@ export default function ({ types: t }) {
       )
     }
 
-    if (!state.get('jsxInit')) {
-      initJSX(path, state)
-      state.set('jsxInit', true)
-    }
-
-    // Replace JSX with an object.
+    // Actually replace JSX with an object.
     path.replaceWith(JSXElement(path.node))
   }
 
