@@ -11,6 +11,7 @@ mkdir $new || exit 1
 
 cd $new
 
+mkdir $new/src
 cp $assets/.env $new/.env
 cp $assets/LICENSE $new/LICENSE
 cat $assets/README.md | sed -e "s/\$1/$1/g" > $new/README.md
