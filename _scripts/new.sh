@@ -16,3 +16,4 @@ cp $assets/LICENSE $new/LICENSE
 cat $assets/README.md | sed -e "s/\$1/$1/g" > $new/README.md
 cat $assets/package.json | sed -e "s/\$1/$1/g" > $new/package.json
 cp $assets/index.js $new/index.js
+cp $assets/src/index.js $new/src/index.js

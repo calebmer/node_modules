@@ -1,6 +1,6 @@
 import assert from 'assert'
 import isFunction from 'lodash/isFunction'
-import createSuperValidator from '../lib/createSuperValidator'
+import createSuperValidator from '../src/createSuperValidator'
 
 describe('createSuperValidator()', () => {
   it('will create a function with all the validators as properties', () => {

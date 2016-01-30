@@ -1,5 +1,5 @@
 import assert from 'assert'
-import * as v from '../lib/Validators'
+import * as v from '../src/Validators'
 
 describe('Validators', () => {
   describe('any()', () => {

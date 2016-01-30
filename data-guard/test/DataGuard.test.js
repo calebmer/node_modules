@@ -1,5 +1,5 @@
 import assert from 'assert'
-import DataGuard from '../lib/DataGuard'
+import DataGuard from '../src/DataGuard'
 
 describe('DataGuard', () => {
   it('exposes all of the validators', () => {

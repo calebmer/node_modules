@@ -1,8 +1,8 @@
 import assert from 'assert'
 import isObject from 'lodash/isObject'
-import * as v from '../lib/Validators'
-import validate from '../lib/validate'
-import createSuperValidator from '../lib/createSuperValidator'
+import * as v from '../src/Validators'
+import validate from '../src/validate'
+import createSuperValidator from '../src/createSuperValidator'
 
 describe('validate()', () => {
   const shape = {

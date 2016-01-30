@@ -1,6 +1,7 @@
 import Assert from 'assert'
 import Path from 'path'
 import Fs from 'fs'
+
 const Babel = require('babel-core')
 
 const fixturesDirectory = Path.join(__dirname, 'fixtures')
@@ -8,7 +9,7 @@ const fixturesDirectory = Path.join(__dirname, 'fixtures')
 const babelOptions = options => ({
   plugins: [
     require('babel-plugin-external-helpers'),
-    [require('../lib').default, options]
+    [require('../src').default, options]
   ]
 })
 

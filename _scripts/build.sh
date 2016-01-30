@@ -2,4 +2,4 @@
 
 npm_bin=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/../node_modules/.bin
 
-$npm_bin/babel lib -d dist
+$npm_bin/babel src -d lib

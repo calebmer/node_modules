@@ -1,6 +1,6 @@
 import assert from 'assert'
-import guard from '../lib/guard'
-import * as v from '../lib/Validators'
+import guard from '../src/guard'
+import * as v from '../src/Validators'
 
 describe('guard()', () => {
   const guardArgs = [v.number(), v.string()]
