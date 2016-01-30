@@ -6,13 +6,13 @@ const defaultMergeData = (stateData, dispatchData, ownData) => ({
   ...dispatchData
 })
 
-export default function connect(
+export default function connect (
   mapStateToData = defaultMapStateToData,
   mapDispatchToData = defaultMapDispatchToData,
   mergeData = defaultMergeData
 ) {
-  return component => function connectedComponent(ownData, ...args) {
-    if (!data || !data.store.dispatch || !data.store.getState) {
+  return component => function connectedComponent (ownData, ...args) {
+    if (!ownData || !ownData.store.dispatch || !ownData.store.getState) {
       throw new Error('To connect to redux, the first argument must be an object with a store property.')
     }
 

@@ -1,1 +1,1 @@
-export connect from './connect'
+exports.connect = require('./connect').default
