@@ -1,0 +1,24 @@
+{
+  "name": "babel-matrix",
+  "version": "0.0.0",
+  "description": "Describe input build syntaxes and output build syntaxes and let babel-matrix figure out your babel configuration for you.",
+  "author": "Caleb Meredith <calebmeredith8@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/calebmer/node_modules/tree/master/babel-matrix",
+  "keywords": [
+    "babel",
+    "matrix",
+    "javascript",
+    "fatigue"
+  ],
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "lodash": "^4.6.1"
+  },
+  "devDependencies": {}
+}
