@@ -34,6 +34,6 @@ This function takes a list of input syntaxes (e.g. `['es6', 'esmodule', 'react',
 This function takes the same parameters as `getPlugins`, except instead of `require`ing the modules, it returns a list of objects. The objects returned in the list have two properties:
 
 - `name`: This is the name used to `require` the plugin.
-- `installation`: This is an installation string which can be used with `npm install` to install the plugin.
+- `version`: This is the version of the plugin `name` we want.
 
 If you don’t have the plugins pre-installed you should use this function to install the plugins first.

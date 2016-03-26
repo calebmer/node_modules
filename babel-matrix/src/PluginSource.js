@@ -4,9 +4,9 @@
  * @class
  */
 class PluginSource {
-  constructor (name, installation) {
+  constructor (name, version) {
     this.name = name
-    this.installation = installation
+    this.version = version
   }
 }
 

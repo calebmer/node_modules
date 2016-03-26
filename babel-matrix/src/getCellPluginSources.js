@@ -108,7 +108,7 @@ export default getCellPluginSources
 
 // Convenience function for creating the source of babel plugins.
 function p (generalName, version) {
-  return new PluginSource(`babel-plugin-${generalName}`, `babel-plugin-${generalName}@${version}`)
+  return new PluginSource(`babel-plugin-${generalName}`, version)
 }
 
 const STRICT_PLUGIN = p('transform-strict-mode', '6.6.x')
