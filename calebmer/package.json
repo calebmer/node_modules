@@ -1,11 +1,13 @@
 {
   "name": "calebmer",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "This is my name. Don’t wear it out.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
   "repository": "https://github.com/calebmer/node_modules/tree/master/calebmer",
-  "keywords": ["calebmer"],
+  "keywords": [
+    "calebmer"
+  ],
   "main": "index.js",
   "files": [
     "index.js",
