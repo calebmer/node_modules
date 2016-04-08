@@ -1,11 +1,16 @@
 {
   "name": "eslint-config-calebmer",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "An opinionated eslint config for me, Caleb Meredith.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
   "repository": "https://github.com/calebmer/node_modules/tree/master/eslint-config-calebmer",
-  "keywords": ["eslint-config", "eslint", "config", "calebmer"],
+  "keywords": [
+    "eslint-config",
+    "eslint",
+    "config",
+    "calebmer"
+  ],
   "main": "index.js",
   "files": [
     "index.json",
