@@ -1,0 +1,86 @@
+{
+  "title": "ndev Configuration",
+  "description": "The configuration format used by ndev.",
+  "type": "object",
+  "required": ["directory"],
+  "properties": {
+    "directory": {
+      "title": "Source Directory",
+      "description": "The directory containing all of your source code.",
+      "type": "string"
+    },
+    "output": {
+      "title": "Output Directory",
+      "description": "The output directory. All targets will build to a sub-directory of this one.",
+      "default": "dist",
+      "type": "string"
+    },
+    "library": {
+      "title": "Library Name",
+      "description": "The name of the library to be exported in the distributable.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "title": "Target",
+    "description": "Some code which can be built.",
+    "type": "object",
+    "required": ["entry"],
+    "additionalProperties": false,
+    "properties": {
+      "entry": {
+        "title": "Entry File",
+        "description": "The entry point for the build.",
+        "type": "string"
+      },
+      "platform": {
+        "title": "Platform",
+        "description": "The platform this target is targeting.",
+        "enum": [
+          "web",
+          "webworker",
+          "node",
+          "electron"
+        ]
+      },
+      "input": {
+        "title": "Input Syntaxes",
+        "description": "The syntaxes used to describe the input source code.",
+        "$ref": "#/definitions/syntaxes"
+      },
+      "output": {
+        "title": "Output Syntaxes",
+        "description": "The syntaxes used to describe the output code the user wants.",
+        "$ref": "#/definitions/syntaxes"
+      }
+    }
+  },
+  "definitions": {
+    "syntaxes": {
+      "title": "Syntaxes",
+      "description": "A list of syntaxes that describe the code.",
+      "default": [],
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/syntax"
+      }
+    },
+    "syntax": {
+      "title": "Syntax",
+      "description": "A syntax string to describe the code.",
+      "enum": [
+        "commonjs",
+        "amd",
+        "umd",
+        "systemjs",
+        "esmodule",
+        "es5",
+        "es6",
+        "esnext",
+        "react",
+        "flow"
+      ]
+    }
+  }
+}

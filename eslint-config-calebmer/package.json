@@ -1,0 +1,23 @@
+{
+  "name": "eslint-config-calebmer",
+  "version": "0.0.0",
+  "description": "An opinionated eslint config for me, Caleb Meredith.",
+  "author": "Caleb Meredith <calebmeredith8@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/calebmer/node_modules/tree/master/eslint-config-calebmer",
+  "keywords": ["eslint-config", "eslint", "config", "calebmer"],
+  "main": "index.js",
+  "files": [
+    "index.json",
+    "react.json"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "babel-eslint": "^6.0.2",
+    "eslint": "^2.7.0",
+    "eslint-plugin-import": "^1.4.0",
+    "eslint-plugin-promise": "^1.1.0",
+    "eslint-plugin-react": "^4.3.0"
+  },
+  "devDependencies": {}
+}

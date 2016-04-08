@@ -1,0 +1,6 @@
+directory = "src"
+
+[server]
+entry = "src/main.js"
+input = ["esnext", "esmodule"]
+output = ["es5", "commonjs"]
