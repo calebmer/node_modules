@@ -9,10 +9,12 @@ Based on the [standard][] coding style except more strict and more opinions.
 - Enhanced [promise][] rules.
 - [ES module][] static linting configuration which checks for existing imports/exports.
 - [JSDoc][] specific rules for the best documentation in the land!
+- Test environment (via `eslint-config-calebmer/tests`) with [Mocha][] specific rules.
 
 [promise]: http://npmjs.org/eslint-plugin-promise
 [es module]: https://www.npmjs.com/package/eslint-plugin-import
 [jsdoc]: https://www.npmjs.com/package/eslint-plugin-jsdoc
+[mocha]: https://www.npmjs.com/package/eslint-plugin-mocha
 
 ## Bikeshedding
 If you don’t like a rule, we can do some bikeshedding, just open an issue. If we can’t quickly come to a resolution, my subjective preference wins out.
