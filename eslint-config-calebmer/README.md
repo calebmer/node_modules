@@ -1,14 +1,25 @@
 # `eslint-config-calebmer`
-An opinionated eslint config for me, Caleb Meredith. Based on the [standard][] coding style except more strict and more opinions.
+An opinionated eslint config with attitude 😘
+
+Based on the [standard][] coding style except more strict and more opinions.
 
 [standard]: http://npmjs.org/standard
 
-## Bikeshedding
+## Features 💡
+- Enhanced [promise][] rules.
+- [ES module][] static linting configuration which checks for existing imports/exports.
+- [JSDoc][] specific rules for the best documentation in the land!
+
+[promise]: http://npmjs.org/eslint-plugin-promise
+[es module]: https://www.npmjs.com/package/eslint-plugin-import
+[jsdoc]: https://www.npmjs.com/package/eslint-plugin-jsdoc
+
+## Bikeshedding 🚲
 If you don’t like a rule, we can do some bikeshedding, just open an issue. If we can’t quickly come to a resolution, my subjective preference wins out.
 
 Warrants for some rules are below.
 
-## Warrants
+## Warrants 🤔
 Some of the decisions made in this config may be controversial, or I may forget why I made them. Therefore here are my warrants for some of the more controversial decisions made in this config.
 
 ### [`semi`][]
@@ -48,11 +59,11 @@ There are three reasons for choosing Stroustrup.
 When doing algorithm documentation for if/else statements it is very hard to decide where to write documentation with the “one true brace style.” Do you write documentation at the start of the if/else block? Do you write documentation inside the if/else blocks? To demonstrate:
 
 ```js
-// Does documentation go here?
+// Does documentation go here? ✍️
 if (foo) {
   // Or here?
   bar()
-// But definetly not here…
+// But definetly not here… ✏️
 } else {
   // If it goes here it may be confused for documenting `baz` instead of the block as a whole.
   baz()
@@ -62,11 +73,11 @@ if (foo) {
 But with Stroustrup documenting if/else blocks is easy.
 
 ```js
-// Document the if here.
+// Document the if here. 👍
 if (foo) {
   bar()
 }
-// Document the else here.
+// Document the else here. 🎉
 else {
   baz()
 }
