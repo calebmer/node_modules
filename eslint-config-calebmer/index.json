@@ -15,7 +15,7 @@
     "import/parser": "babel-eslint"
   },
   "rules": {
-    "comma-dangle": [2, "never"],
+    "comma-dangle": [2, "always-multiline"],
     "no-cond-assign": [2, "always"],
     "no-console": 1,
     "no-constant-condition": 2,

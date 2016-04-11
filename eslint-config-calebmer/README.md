@@ -24,12 +24,18 @@ Warrants for some rules are below.
 ## Warrants
 Some of the decisions made in this config may be controversial, or I may forget why I made them. Therefore here are my warrants for some of the more controversial decisions made in this config.
 
-### [`semi`][]
+**Table of contents:**
+
+- [Semicolons](#semicolons)
+- [Brace Style](#brace-style)
+- [Comma Dangle](#comma-dangle)
+
+### [Semicolons][]
 Semicolons are disabled. I don’t want to write any more characters than I have to. Deal with it 😎
 
-[`semi`]: http://eslint.org/docs/rules/semi
+[Semicolons]: http://eslint.org/docs/rules/semi
 
-### [`brace-style`][]
+### [Brace Style][]
 The brace style is configured to Stroustrup. This forces braces from if/else statements to act like this:
 
 ```js
@@ -150,4 +156,41 @@ if (foo) {
 }
 ```
 
-[`brace-style`]: http://eslint.org/docs/rules/brace-style
+[brace style]: http://eslint.org/docs/rules/brace-style
+
+### [Comma Dangle][]
+Inspired by “[Why you should enforce Dangling Commas for Multiline Statements][]” this configuration enforces dangling commas for multiline statements. So the following code is invalid:
+
+```js
+// Yeah, no…
+
+const array = [
+  'foo',
+  'bar',
+  'buz'
+]
+```
+
+But the following code is valid:
+
+```js
+// Yay! 🎉
+
+const array = [
+  'foo',
+  'bar',
+  'buz',
+]
+```
+
+Note that the only difference between the two examples is a *single comma*. For the main argument, read the article linked to earlier, but the gist of the article is that enforcing dangling commas for multiline statements is preferable because you only have to change one line instead of two when adding an item to a multiline object.
+
+This has two impacts:
+
+1. Better git diffs.
+2. Easier to edit.
+
+Therefore this rule is enforced in this configuration.
+
+[Comma Dangle]: http://eslint.org/docs/rules/comma-dangle
+[Why you should enforce Dangling Commas for Multiline Statements]: https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
