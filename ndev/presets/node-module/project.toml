@@ -1,6 +1,0 @@
-directory = "src"
-
-[node]
-entry = "src/index.js"
-input = ["esnext", "esmodule"]
-output = ["es5", "commonjs"]
