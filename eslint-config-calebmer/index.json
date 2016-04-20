@@ -8,7 +8,8 @@
   "plugins": [
     "promise",
     "import",
-    "jsdoc"
+    "jsdoc",
+    "markdown"
   ],
   "settings": {
     "import/ignore": ["node_modules"],
