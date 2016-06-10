@@ -1,6 +1,6 @@
 {
   "name": "babel-matrix",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Describe input build syntaxes and output build syntaxes and let babel-matrix figure out your babel configuration for you.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
