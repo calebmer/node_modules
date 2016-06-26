@@ -1,0 +1,22 @@
+{
+  "name": "test-dom",
+  "version": "0.0.0",
+  "description": "Easily import a global instance of JSDOM into your tests.",
+  "author": "Caleb Meredith <calebmeredith8@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/calebmer/node_modules/tree/master/test-dom",
+  "keywords": [
+    "dom",
+    "test",
+    "easy"
+  ],
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "jsdom": "^9.2.1"
+  },
+  "devDependencies": {}
+}
