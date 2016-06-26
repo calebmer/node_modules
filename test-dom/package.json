@@ -1,6 +1,6 @@
 {
   "name": "test-dom",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Easily import a global instance of JSDOM into your tests.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
