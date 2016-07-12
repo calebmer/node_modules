@@ -9,7 +9,7 @@ var jsx = {
     elementName: 'b',
     attributes: {},
     children: null
-  }, ' ', '\n    ', {
+  }, ' \n    ', {
     elementName: 'c',
     attributes: {},
     children: null

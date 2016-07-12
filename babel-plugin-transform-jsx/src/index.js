@@ -186,7 +186,24 @@ export default function ({ types: t }) {
 
     const JSXChild = transformOnType({ JSXText, JSXElement, JSXExpressionContainer })
 
-    const JSXChildren = nodes => t.arrayExpression(nodes.map(JSXChild).filter(Boolean))
+    const JSXChildren = nodes => t.arrayExpression(
+      nodes
+      .map(JSXChild)
+      .filter(Boolean)
+      // Normalize all of our string children into one big string. This can be
+      // an optimization as we minimize the number of nodes created.
+      // This step just turns `['1', '2']` into `['12']`.
+      .reduce((children, child) => {
+        const lastChild = children.length > 0 ? children[children.length - 1] : null
+
+        // If this is a string literal, and the last child is a string literal, merge them.
+        if (child.type === 'StringLiteral' && lastChild && lastChild.type === 'StringLiteral')
+          return [...children.slice(0, -1), t.stringLiteral(lastChild.value + child.value)]
+
+        // Otherwise just append the child to our array normally.
+        return [...children, child]
+      }, [])
+    )
 
     // Actually replace JSX with an object.
     path.replaceWith(JSXElement(path.node))
