@@ -170,7 +170,11 @@ export default function ({ types: t }) {
       )
     }
 
-    const JSXText = node => t.stringLiteral(node.value.replace(/\s+/g, ' '))
+    const JSXText = node => {
+      if (state.opts.noTrim) return t.stringLiteral(node.value)
+      const value = node.value.replace(/\n\s*/g, '')
+      return value === '' ? null : t.stringLiteral(value)
+    }
 
     const JSXElement = node => jsxObjectTransformer(
       t.objectExpression([
@@ -182,7 +186,7 @@ export default function ({ types: t }) {
 
     const JSXChild = transformOnType({ JSXText, JSXElement, JSXExpressionContainer })
 
-    const JSXChildren = nodes => t.arrayExpression(nodes.map(JSXChild))
+    const JSXChildren = nodes => t.arrayExpression(nodes.map(JSXChild).filter(Boolean))
 
     // Actually replace JSX with an object.
     path.replaceWith(JSXElement(path.node))

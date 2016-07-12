@@ -1,9 +1,9 @@
 var object = jsxConstructor({
   elementName: "div",
   attributes: {},
-  children: [" ", jsxConstructor({
+  children: [jsxConstructor({
     elementName: "strong",
     attributes: {},
     children: ["Hello,"]
-  }), " world! "]
+  }), " world!"]
 });

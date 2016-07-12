@@ -66,6 +66,7 @@ This plugin accepts options in the standard babel fashion, such as the following
 - `function`: The function name to be used for constructing JSX objects.
 - `useNew`: Instead of calling a constructor function (as defined using an earlier option) use `new`.
 - `useVariables`: Allow elements to reference variables, enabling component element names. When set to `true`, element names with an uppercase letter from A to Z are treated as variables. When set to a regular expression pattern, matching names are treated as variables.
+- `noTrim`: Specifies whether or not we should trim space in strings. To understand more about trimming, see the [Trimming](#trimming) example below. Defaults to false.
 
 ## How to integrate with your framework
 To integrate this JSX transformer with your framework of choice, you must first define a constructor function which takes a single argument (a JSX object) and returns the appropriate format for your framework. After that, you could take one of two approaches:
@@ -89,6 +90,12 @@ module.exports = function jsx(jsxObject) {
   )
 }
 ```
+
+## Differences with [`babel-plugin-transform-react-jsx`][btrj] and [`babel-plugin-transform-react-inline-elements`][brie]
+
+- No more `createElement` or other pragma or file import required, but is supported via the `function` and `module` options.
+- No `$$typeof`, `props`, `key`, `ref`, or other specific React lingo.
+- Does not support component element names by default, though support is available via the `useVariables` option.
 
 ## Examples
 ### Basic
@@ -286,12 +293,61 @@ var object = {
 }
 ```
 
-## Differences with [`babel-plugin-transform-react-jsx`][btrj] and [`babel-plugin-transform-react-inline-elements`][brie]
+### Trimming
+This JSX transformer will try to optimize your JSX text elements by “trimming” away unnesesary strings. What does that mean? Any length space in your string that starts with a new line character (`\n`) because in *most* scenarios that’s just indentation. So for example JSX that looks like this:
 
-- No more `createElement` or other pragma or file import required, but is supported via the `function` and `module` options.
-- No `$$typeof`, `props`, `key`, `ref`, or other specific React lingo.
-- Does not support component element names by default, though support is available via the `useVariables` option.
+```jsx
+var jsx = (
+  <p>
+    <strong>Hello,</strong> world!
+  </p>
+)
+```
 
+…would (without trimming) turn into something like this:
+
+```js
+var jsx = {
+  elementName: 'p',
+  attributes: {},
+  children: ['\n    ', {
+    elementName: 'strong',
+    attributes: {},
+    children: ['Hello,']
+  }, ' world!\n  '],
+}
+```
+
+Notice all the extra space leftover from where we indented our code? This plugin will trim that extra space to create a result that looks like:
+
+```js
+var jsx = {
+  elementName: 'p',
+  attributes: {},
+  children: [{
+    elementName: 'strong',
+    attributes: {},
+    children: ['Hello,']
+  }, ' world!'],
+}
+```
+
+Which is more like what the author really wanted the JSX to transform to. If you want to preserve the white space that gets trimmed, set the `noTrim` option to `true`.
+
+If you really need a space somewhere this JSX transformer is trimming it, just us a JS-escape like so:
+
+```jsx
+var jsx = (
+  <div>
+    Hello, world!{' '}
+    Hello world again!
+  </div>
+)
+```
+
+> For pre-2.0.0 users, the original trimming algorithm was similar to what you’d find in a browser. Any whitespace of more than one character was collapsed into a single space string. The trimming method in 2.0.0 and on removes this browser-specific behavior for a method that’s more universal.
+
+* * *
 
 ## Credits
 If you like this plugin, follow me, [`@calebmer`][twcm], on Twitter. It will be great seeing you there and you can get updates of all the stuff I will be doing.
