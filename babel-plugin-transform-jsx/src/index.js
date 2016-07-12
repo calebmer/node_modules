@@ -197,8 +197,9 @@ export default function ({ types: t }) {
         const lastChild = children.length > 0 ? children[children.length - 1] : null
 
         // If this is a string literal, and the last child is a string literal, merge them.
-        if (child.type === 'StringLiteral' && lastChild && lastChild.type === 'StringLiteral')
+        if (child.type === 'StringLiteral' && lastChild && lastChild.type === 'StringLiteral') {
           return [...children.slice(0, -1), t.stringLiteral(lastChild.value + child.value)]
+        }
 
         // Otherwise just append the child to our array normally.
         return [...children, child]
