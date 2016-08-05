@@ -17,9 +17,7 @@
     "react.json",
     "tests.json"
   ],
-  "scripts": {
-    "test": "eslint tests"
-  },
+  "scripts": {},
   "dependencies": {
     "babel-eslint": "^6.0.2",
     "eslint": "3.2.2",
