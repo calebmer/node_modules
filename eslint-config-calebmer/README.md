@@ -31,6 +31,7 @@ Some of the decisions made in this config may be controversial, or I may forget 
 - [Semicolons](#semicolons)
 - [Brace Style](#brace-style)
 - [Comma Dangle](#comma-dangle)
+- [No Namespace Imports](#no-namespace-imports)
 
 ### [Semicolons][]
 Semicolons are disabled. I don’t want to write any more characters than I have to. Deal with it 😎
@@ -196,3 +197,26 @@ Therefore this rule is enforced in this configuration.
 
 [Comma Dangle]: http://eslint.org/docs/rules/comma-dangle
 [Why you should enforce Dangling Commas for Multiline Statements]: https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
+
+### [No Namespace Imports][]
+If you try to import values from an ES module like so:
+
+```js
+import * as foo from './foo'
+```
+
+You *will* get an error.
+
+Why is this? Well because doing this can lead to importing *everything* from a module. This is an anti-pattern when you are code splitting your modules trying to make the smallest build possible. Instead of depending on a namespace import, instead use a default export object like so:
+
+```js
+export default {
+  foo: 1,
+  bar: 2,
+  baz: 3,
+}
+```
+
+This way you are more explicit about your intent for the exports.
+
+Ultimately, named exports should be used when you want the user to be selective about their module imports.
