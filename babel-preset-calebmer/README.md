@@ -1,5 +1,5 @@
 # babel-preset-calebmer
-This Babel preset holds plugins that make modern JavaScript development with a Babel compiler much easier. This package also bundles *all* of the dependencies, which means the npm install time is fast.
+This Babel preset holds plugins that make modern JavaScript development with a Babel compiler much easier.
 
 What’s included?
 
