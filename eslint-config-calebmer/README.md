@@ -220,3 +220,5 @@ export default {
 This way you are more explicit about your intent for the exports.
 
 Ultimately, named exports should be used when you want the user to be selective about their module imports.
+
+[No Namespace Imports]: https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-namespace.md
