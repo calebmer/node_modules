@@ -5,6 +5,7 @@
   },
   "plugins": [
     "babel",
+    "xo",
     "promise",
     "import",
     "jsdoc",
@@ -216,6 +217,13 @@
     "babel/no-await-in-loop": 2,
     "babel/flow-object-type": [2, "comma"],
     "babel/func-params-comma-dangle": [2, "always-multiline"],
+
+    "xo/catch-error-name": [2, { "name": "error" }],
+    "xo/explicit-length-check": 2,
+    "xo/filename-case": 0,
+    "xo/no-abusive-eslint-disable": 2,
+    "xo/no-process-exit": 2,
+    "xo/throw-new-error": 2,
 
     "promise/catch-or-return": 2,
     "promise/always-return": 0,
