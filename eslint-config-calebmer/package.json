@@ -15,7 +15,8 @@
   "files": [
     "index.json",
     "react.json",
-    "tests.json"
+    "react-native.json",
+    "react-web.json"
   ],
   "scripts": {},
   "dependencies": {
