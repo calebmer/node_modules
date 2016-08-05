@@ -1,5 +1,7 @@
 {
-  "extends": "./react.json",
+  "extends": [
+    "./react.json"
+  ],
   "globals": {
     "__DEV__": true
   },

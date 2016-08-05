@@ -1,4 +1,7 @@
 {
+  "extends": [
+    "./index.json"
+  ],
   "env": {
     "mocha": true
   },
@@ -6,9 +9,6 @@
     "mocha"
   ],
   "rules": {
-    "max-nested-callbacks": 0,
-    "max-len": 0,    
-
     "mocha/no-exclusive-tests": 2,
     "mocha/handle-done-callback": 2,
     "mocha/no-synchronous-tests": 0,
