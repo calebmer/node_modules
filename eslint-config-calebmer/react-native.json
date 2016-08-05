@@ -6,6 +6,17 @@
   "plugins": [
     "react-native"
   ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".android.js",
+          ".ios.js"
+        ]
+      }
+    }
+  },
   "rules": {
     "react-native/no-unused-styles": 2,
     "react-native/split-platform-components": 0,
