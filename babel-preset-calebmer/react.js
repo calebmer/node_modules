@@ -10,7 +10,7 @@ module.exports = function preset (context, opts = {}) {
       !production && require('babel-plugin-transform-react-jsx-self'),
       production && require('babel-plugin-transform-react-inline-elements'),
       production && require('babel-plugin-transform-react-constant-elements'),
-      production && require('babel-plugin-transform-react-remove-prop-types'),
+      production && require('babel-plugin-transform-react-remove-prop-types').default,
       production && require('babel-plugin-transform-react-pure-class-to-function'),
     ].filter(Boolean)
   }
