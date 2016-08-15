@@ -1,4 +1,4 @@
-module.exports = function preset (context, opts) {
+module.exports = function preset (context, opts = {}) {
   const es2015 = Boolean(opts.es2015)
   const modules = Boolean(opts.modules)
   const production = Boolean(opts.production || process.env.NODE_ENV === 'production')

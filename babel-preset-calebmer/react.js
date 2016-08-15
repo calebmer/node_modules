@@ -1,4 +1,4 @@
-module.exports = function preset (context, opts) {
+module.exports = function preset (context, opts = {}) {
   const production = Boolean(opts.production || process.env.NODE_ENV === 'production')
 
   return {
