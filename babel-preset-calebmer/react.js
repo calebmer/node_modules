@@ -2,14 +2,6 @@ module.exports = function preset (context, opts) {
   const production = Boolean(opts.production || process.env.NODE_ENV === 'production')
 
   return {
-    // This is a feature of `babel-loader` for webpack (not Babel itself).
-    // It enables caching results in OS temporary directory for faster rebuilds.
-    cacheDirectory: !production,
-
-    presets: [
-      require('./index')(context, opts),
-    ],
-
     plugins: [
       require('babel-plugin-transform-react-jsx'),
       require('babel-plugin-syntax-jsx'),
