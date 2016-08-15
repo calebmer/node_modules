@@ -235,7 +235,6 @@
     "babel/func-params-comma-dangle": ["error", "always-multiline"],
 
     "xo/catch-error-name": ["error", { "name": "error" }],
-    "xo/explicit-length-check": "error",
     "xo/filename-case": "off",
     "xo/no-abusive-eslint-disable": "error",
     "xo/no-process-exit": "error",
