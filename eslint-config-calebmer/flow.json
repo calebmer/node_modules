@@ -1,0 +1,16 @@
+{
+  "plugins": [
+    "flowtype"
+  ],
+  "rules": {
+    "flowtype/define-flow-type": "error",
+    "flowtype/require-parameter-type": ["error", { "excludeArrowFunctions": "expressionsOnly" }],
+    "flowtype/require-return-type": ["error", { "excludeArrowFunctions": "expressionsOnly" }],
+    "flowtype/require-valid-file-annotation": ["error", "always"],
+    "flowtype/space-after-type-colon": ["error", "always"],
+    "flowtype/space-before-type-colon": ["error", "never"],
+    "flowtype/type-id-match": "off",
+    "flowtype/use-flow-type": "error",
+    "flowtype/valid-syntax": "error"
+  }
+}
