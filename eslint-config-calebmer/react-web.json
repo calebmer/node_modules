@@ -1,7 +1,4 @@
 {
-  "extends": [
-    "./react.json"
-  ],
   "env": {
     "browser": true
   },

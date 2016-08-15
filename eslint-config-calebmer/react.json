@@ -1,7 +1,4 @@
 {
-  "extends": [
-    "./index.json"
-  ],
   "ecmaFeatures": {
     "jsx": true
   },
