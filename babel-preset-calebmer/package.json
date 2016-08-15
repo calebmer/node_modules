@@ -9,6 +9,7 @@
   "main": "index.js",
   "files": [
     "index.js",
+    "flow.js",
     "react.js"
   ],
   "scripts": {},
