@@ -12,8 +12,7 @@
     "xo",
     "promise",
     "import",
-    "jsdoc",
-    "markdown"
+    "jsdoc"
   ],
   "settings": {
     "import/ignore": ["node_modules"],
