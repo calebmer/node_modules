@@ -35,7 +35,7 @@
     "react/jsx-filename-extension": "off",
     "react/jsx-first-prop-new-line": "off",
     "react/jsx-handler-names": "off",
-    "react/jsx-indent-props": ["error", "error"],
+    "react/jsx-indent-props": ["error", 2],
     "react/jsx-key": "error",
     "react/jsx-max-props-per-line": "off",
     "react/jsx-no-bind": "off",
