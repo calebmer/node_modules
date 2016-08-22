@@ -1,7 +1,12 @@
+const moduleTypes = ['native', 'commonjs', 'amd', 'umd', 'systemjs']
+
 module.exports = function preset (context, opts = {}) {
-  const modules = Boolean(opts.modules)
+  const modules = opts.modules || 'commonjs'
   const production = Boolean(opts.production || process.env.NODE_ENV === 'production')
   const loose = production
+
+  if (moduleTypes.indexOf(modules) === -1)
+    throw new Error(`The string '${modules}' is not a valid module type.`)
 
   return {
     plugins: [
@@ -27,8 +32,10 @@ module.exports = function preset (context, opts = {}) {
       require('babel-plugin-transform-es2015-typeof-symbol'),
       [require('babel-plugin-transform-regenerator'), { async: false, asyncGenerators: false }],
 
-      // import foo from './bar'
-      !modules && [require('babel-plugin-transform-es2015-modules-commonjs'), { loose }],
+      modules === 'commonjs' && [require('babel-plugin-transform-es2015-modules-commonjs'), { loose }],
+      modules === 'systemjs' && [require('babel-plugin-transform-es2015-modules-systemjs'), { loose }],
+      modules === 'amd' && [require('babel-plugin-transform-es2015-modules-amd'), { loose }],
+      modules === 'umd' && [require('babel-plugin-transform-es2015-modules-umd'), { loose }],
     ].filter(Boolean)
   }
 }
