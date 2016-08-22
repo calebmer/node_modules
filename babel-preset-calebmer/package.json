@@ -8,7 +8,8 @@
   "keywords": [],
   "main": "index.js",
   "files": [
-    "index.js",
+    "es2015.js",
+    "esnext.js",
     "flow.js",
     "react.js"
   ],
