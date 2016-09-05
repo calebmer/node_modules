@@ -19,7 +19,12 @@
     "react-native.json",
     "react-web.json"
   ],
-  "scripts": {},
+  "scripts": {
+    "build": "../_scripts/build.sh",
+    "lint": "../_scripts/lint.sh",
+    "test": "../_scripts/test.sh",
+    "release": "../_scripts/release.sh"
+  },
   "dependencies": {
     "babel-eslint": "^6.0.2",
     "eslint": "3.2.2",

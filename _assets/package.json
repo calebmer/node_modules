@@ -11,7 +11,12 @@
     "index.js",
     "lib"
   ],
-  "scripts": {},
+  "scripts": {
+    "build": "../_scripts/build.sh",
+    "lint": "../_scripts/lint.sh",
+    "test": "../_scripts/test.sh",
+    "release": "../_scripts/release.sh",
+  },
   "dependencies": {},
   "devDependencies": {}
 }
