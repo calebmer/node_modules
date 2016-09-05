@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-calebmer",
-  "version": "8.1.1",
+  "version": "8.2.0",
   "description": "An opinionated eslint config with attitude 😘",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
