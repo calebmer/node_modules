@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-calebmer",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "A Babel preset for modern JavaScript development.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
