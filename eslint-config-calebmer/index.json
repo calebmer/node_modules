@@ -224,6 +224,7 @@
     "babel/object-shorthand": "error",
     "prefer-arrow-callback": "off",
     "prefer-const": "error",
+    "prefer-numeric-literals": "error",
     "prefer-reflect": "off",
     "prefer-spread": "error",
     "prefer-template": "error",
