@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "babel-eslint": "^6.0.2",
-    "eslint": "3.2.2",
+    "eslint": "3.5.0",
     "eslint-plugin-babel": "3.3.0",
     "eslint-plugin-flowtype": "^2.7.0",
     "eslint-plugin-import": "1.12.0",
