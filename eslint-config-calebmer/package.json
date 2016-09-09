@@ -23,8 +23,7 @@
     "build": "../_scripts/build.sh",
     "lint": "../_scripts/lint.sh",
     "test": "../_scripts/test.sh",
-    "release": "../_scripts/release.sh",
-    "bundle": "bundle-dependencies update"
+    "release": "../_scripts/release.sh"
   },
   "dependencies": {
     "babel-eslint": "^6.0.2",
@@ -39,20 +38,5 @@
     "eslint-plugin-react-native": "1.2.1",
     "eslint-plugin-xo": "^0.5.1"
   },
-  "devDependencies": {
-    "bundle-dependencies": "^1.0.2"
-  },
-  "bundledDependencies": [
-    "babel-eslint",
-    "eslint",
-    "eslint-plugin-babel",
-    "eslint-plugin-flowtype",
-    "eslint-plugin-import",
-    "eslint-plugin-jsdoc",
-    "eslint-plugin-jsx-a11y",
-    "eslint-plugin-promise",
-    "eslint-plugin-react",
-    "eslint-plugin-react-native",
-    "eslint-plugin-xo"
-  ]
+  "devDependencies": {}
 }
