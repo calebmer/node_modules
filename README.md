@@ -1,4 +1,6 @@
 # node_modules
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/calebmer/node_modules.svg)](https://greenkeeper.io/)
 This is a monorepo for JavaScript packages that Caleb Meredith maintains. A monorepo is a single git repository, a single folder, which contains multiple modules. Instead of having a separate repository for each module Caleb publishes to npm, he instead opts for one. But why?
 
 Remember the article [JavaScript fatigue](https://medium.com/@ericclemmons/48d4011b6fc4)? This is one solution. By putting every single module in one repository all of the build scripts, lint scripts, test scripts, release scripts only need to be written once. Starting a new module is as simple as calling a ”new” command. In addition putting everything in one place lowers the barrier to modification raising quality of all packages.
