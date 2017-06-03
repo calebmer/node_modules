@@ -1,0 +1,5 @@
+{
+  "module": "my-function",
+  "function": "MyFunction",
+  "useNew": true
+}
