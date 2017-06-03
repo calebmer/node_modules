@@ -50,7 +50,7 @@ var dropdown = {
 };
 ```
 
-No JSX pragma needed and no `/* @jsx */` comments needed (although constructor functions are supported).
+No JSX pragma needed and no `/* @jsx */` comments needed (although constructor functions and per-file overrides are supported).
 
 ## A JSX Object
 The names of properties in a JSX object are taken directly from the [spec][jsxs]. What the spec may call `JSXElementName`, in an object it is called `elementName` and so on. Currently properties to be expected are:
@@ -208,6 +208,42 @@ var object = jsx({
   attributes: {},
   children: [
     jsx({
+      elementName: 'string',
+      attributes: {},
+      children: ['Hello,']
+    }),
+    ' world!'
+  ]
+})
+```
+
+You can also override the Babel setting on a per-file basis using `/* @jsx */` comments.
+
+#### Options
+```json
+{
+  "plugins": [["transform-jsx", { "function": "jsx" }]]
+}
+```
+
+#### JSX
+```jsx
+/* @jsx myOverride */
+
+var object = (
+  <p>
+    <strong>Hello,</strong> world!
+  </p>
+)
+```
+
+#### JavaScript
+```js
+var object = myOverride({
+  elementName: 'p',
+  attributes: {},
+  children: [
+    myOverride({
       elementName: 'string',
       attributes: {},
       children: ['Hello,']

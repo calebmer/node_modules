@@ -8,6 +8,8 @@ const attributesProperty = 'attributes'
 const childrenProperty = 'children'
 
 export default function ({ types: t }) {
+  const JSX_ANNOTATION_REGEX = /\*?\s*@jsx\s+([^\s]+)(?:\s+([^\s]+))?/;
+
   /* ==========================================================================
    * Utilities
    * ======================================================================= */
@@ -75,6 +77,22 @@ export default function ({ types: t }) {
   /* =========================================================================
    * Visitors
    * ======================================================================= */
+
+  const visitProgram = (path, state) => {
+    const comments = (state && state.file && state.file.ast && state.file.ast.comments) || []
+
+    const [override] = comments.map(comment => {
+      const [_, pragma, useNew] = JSX_ANNOTATION_REGEX.exec(comment.value) || []
+      return pragma ? { function: pragma, useNew: useNew === 'true', module: undefined } : undefined
+    }).filter(
+      Boolean
+    )
+
+    if (override) {
+      const opts = Object.assign({}, state.opts, override);
+      state.set('jsxConfig', initConfig(path, Object.assign({}, state, { opts })))
+    }
+  };
 
   const visitJSXElement = (path, state) => {
     if (!state.get('jsxConfig')) {
@@ -217,6 +235,7 @@ export default function ({ types: t }) {
   return {
     inherits: require('babel-plugin-syntax-jsx'),
     visitor: {
+      Program: visitProgram,
       JSXElement: visitJSXElement
     }
   }
