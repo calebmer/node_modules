@@ -8,7 +8,7 @@ const attributesProperty = 'attributes'
 const childrenProperty = 'children'
 
 export default function ({ types: t }) {
-  const JSX_ANNOTATION_REGEX = /\*?\s*@jsx\s+([^\s]+)(?:\s+(true|false))?/;
+  const JSX_ANNOTATION_REGEX = /\*?\s*@jsx\s+([^\s]+)(?:\s+([^\s]+))?/;
 
   /* ==========================================================================
    * Utilities
