@@ -89,7 +89,8 @@ export default function ({ types: t }) {
     )
 
     if (override) {
-      state.set('jsxConfig', initConfig(path, Object.assign({}, state, { opts: override })))
+      const opts = Object.assign({}, state.opts, override);
+      state.set('jsxConfig', initConfig(path, Object.assign({}, state, { opts })))
     }
   };
 
