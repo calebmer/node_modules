@@ -6,6 +6,7 @@ import esutils from 'esutils'
 const nameProperty = 'elementName'
 const attributesProperty = 'attributes'
 const childrenProperty = 'children'
+const uniqueId = 'guid'
 
 export default function ({ types: t }) {
   /* ==========================================================================
@@ -85,6 +86,31 @@ export default function ({ types: t }) {
       variablesRegex,
       jsxObjectTransformer
     } = state.get('jsxConfig')
+
+    /* ==========================================================================
+     * UniqueId generator
+     * ======================================================================= */
+    const guid = () => {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return (
+        s4() +
+        s4() +
+        '-' +
+        s4() +
+        '-' +
+        s4() +
+        '-' +
+        s4() +
+        '-' +
+        s4() +
+        s4() +
+        s4()
+      );
+    }
 
     /* ==========================================================================
      * Node Transformers
@@ -180,7 +206,8 @@ export default function ({ types: t }) {
       t.objectExpression([
         t.objectProperty(t.identifier(nameProperty), JSXElementName(node.openingElement.name)),
         t.objectProperty(t.identifier(attributesProperty), JSXAttributes(node.openingElement.attributes)),
-        t.objectProperty(t.identifier(childrenProperty), node.closingElement ? JSXChildren(node.children) : t.nullLiteral())
+        t.objectProperty(t.identifier(childrenProperty), node.closingElement ? JSXChildren(node.children) : t.nullLiteral()),
+        t.objectProperty(t.identifier(uniqueId), t.stringLiteral(guid()))
       ])
     )
 
