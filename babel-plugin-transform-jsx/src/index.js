@@ -20,6 +20,11 @@ export default function ({ types: t }) {
     throw new Error(`${node.type} could not be transformed`)
   }
 
+  // Given "a.b" returns a function from arguments to a call to (a.b) with those arguments.
+  const optionToExpression = dottedIdentifier => {
+    return dottedIdentifier.split('.').map(ary(t.identifier, 1)).reduce(ary(t.memberExpression, 2))
+  }
+
   /* ==========================================================================
    * Initial configuration
    * ======================================================================= */
@@ -29,7 +34,8 @@ export default function ({ types: t }) {
       useNew = false,
       module: constructorModule,
       function: constructorFunction,
-      useVariables = false
+      useVariables = false,
+      literals = false
     } = state.opts
 
     let variablesRegex, jsxObjectTransformer
@@ -43,7 +49,7 @@ export default function ({ types: t }) {
     }
 
     const executeExpression = useNew ? t.newExpression : t.callExpression
-    const jsxObjectTransformerCreator = expression => value => executeExpression(expression, [value])
+    const jsxObjectTransformerCreator = expression => (...args) => executeExpression(expression, args)
 
     if (constructorModule) {
       // If the constructor function will be retrieved from a module.
@@ -59,16 +65,22 @@ export default function ({ types: t }) {
       path.findParent(p => p.isProgram()).unshiftContainer('body', importDeclaration)
     } else if (constructorFunction) {
       // If the constructor function will be an in scope function.
-      const expression = constructorFunction.split('.').map(ary(t.identifier, 1)).reduce(ary(t.memberExpression, 2))
-      jsxObjectTransformer = jsxObjectTransformerCreator(expression)
+      jsxObjectTransformer = jsxObjectTransformerCreator(optionToExpression(constructorFunction))
     } else {
       // Otherwise, we won‘t be mapping.
       jsxObjectTransformer = identity
     }
 
+    let literalTransformer = identity
+    if (literals) {
+      const fnName = typeof literals === 'string' ? literals : 'JSXLiteral'
+      literalTransformer = jsxObjectTransformerCreator(optionToExpression(fnName))
+    }
+
     return {
       variablesRegex,
-      jsxObjectTransformer
+      jsxObjectTransformer,
+      literalTransformer
     }
   }
 
@@ -83,7 +95,8 @@ export default function ({ types: t }) {
 
     const {
       variablesRegex,
-      jsxObjectTransformer
+      jsxObjectTransformer,
+      literalTransformer
     } = state.get('jsxConfig')
 
     /* ==========================================================================
@@ -116,12 +129,12 @@ export default function ({ types: t }) {
 
     const JSXAttributeName = transformOnType({ JSXIdentifier, JSXNamespacedName, JSXMemberExpression })
 
-    const JSXAttributeValue = transformOnType({
-      StringLiteral: node => node,
+    const JSXAttributeValue = context => transformOnType({
+      StringLiteral: (value) => literalTransformer(value, t.stringLiteral(context)),
       JSXExpressionContainer
     })
 
-    const JSXAttributes = nodes => {
+    const JSXAttributes = (elementName, nodes) => {
       let object = []
       const objects = []
 
@@ -137,7 +150,8 @@ export default function ({ types: t }) {
 
             const value = node.value !== null ? node.value : attributeName
 
-            object.push(t.objectProperty(objectKey, JSXAttributeValue(value)))
+            const context = `${elementName.name} ${attributeName.value}`
+            object.push(t.objectProperty(objectKey, JSXAttributeValue(context)(value)))
             break
           }
           case 'JSXSpreadAttribute': {
@@ -173,15 +187,16 @@ export default function ({ types: t }) {
     }
 
     const JSXText = node => {
-      if (state.opts.noTrim) return t.stringLiteral(node.value)
-      const value = node.value.replace(/\n\s*/g, '')
-      return value === '' ? null : t.stringLiteral(value)
+      const value = state.opts.noTrim
+         ? node.value
+        : node.value.replace(/\n\s*/g, '')
+      return value === '' ? null : literalTransformer(t.stringLiteral(value), t.stringLiteral('#text'))
     }
 
     const JSXElement = node => jsxObjectTransformer(
       t.objectExpression([
         t.objectProperty(t.identifier(nameProperty), JSXElementName(node.openingElement.name)),
-        t.objectProperty(t.identifier(attributesProperty), JSXAttributes(node.openingElement.attributes)),
+        t.objectProperty(t.identifier(attributesProperty), JSXAttributes(node.openingElement.name, node.openingElement.attributes)),
         t.objectProperty(t.identifier(childrenProperty), node.closingElement ? JSXChildren(node.children) : t.nullLiteral())
       ])
     )
@@ -206,6 +221,11 @@ export default function ({ types: t }) {
         // Otherwise just append the child to our array normally.
         return [...children, child]
       }, [])
+      .map(child => {
+        return child.type === 'StringLiteral'
+          ? literalTransformer(child, t.stringLiteral('#text'))
+          : child
+      })
     )
 
     // Actually replace JSX with an object.
