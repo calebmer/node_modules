@@ -28,8 +28,10 @@ If you want to make a pull request, please adhere to the following:
 To develop a module first clone the repo (it‘s recommended you rename the folder from `node_modules`). Next switch into the directory of the module you want to work on. Finally (and this is really important) call `source .env`. What this does is it takes all of the scripts and makes them available to you as you develop.
 
 ```bash
-$ git clone https://github.com/calebmer/node_modules.git node-modules
-$ cd node_modules/{module-i-want-to-work-on}
+$ git clone https://github.com/calebmer/node_modules.git calebmer_monorepo
+$ cd calebmer_monorepo
+$ npm install
+$ cd {module-i-want-to-work-on}
 $ source .env
 ```
 
