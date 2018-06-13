@@ -135,7 +135,9 @@ export default function ({ types: t }) {
             const attributeName = JSXAttributeName(node.name)
             const objectKey = esutils.keyword.isIdentifierNameES6(attributeName.value) ? t.identifier(attributeName.value) : attributeName
 
-            object.push(t.objectProperty(objectKey, JSXAttributeValue(node.value)))
+            const value = node.value !== null ? node.value : attributeName
+
+            object.push(t.objectProperty(objectKey, JSXAttributeValue(value)))
             break
           }
           case 'JSXSpreadAttribute': {
