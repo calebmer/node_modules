@@ -67,6 +67,7 @@ This plugin accepts options in the standard babel fashion, such as the following
 - `useNew`: Instead of calling a constructor function (as defined using an earlier option) use `new`.
 - `useVariables`: Allow elements to reference variables, enabling component element names. When set to `true`, element names with an uppercase letter from A to Z are treated as variables. When set to a regular expression pattern, matching names are treated as variables.
 - `noTrim`: Specifies whether or not we should trim space in strings. To understand more about trimming, see the [Trimming](#trimming) example below. Defaults to false.
+- `literals`: The name of a function called for literal attribute and text node values.  Called as a constructor if `useNew`.
 
 ## How to integrate with your framework
 To integrate this JSX transformer with your framework of choice, you must first define a constructor function which takes a single argument (a JSX object) and returns the appropriate format for your framework. After that, you could take one of two approaches:
@@ -346,6 +347,50 @@ var jsx = (
 ```
 
 > For pre-2.0.0 users, the original trimming algorithm was similar to what you’d find in a browser. Any whitespace of more than one character was collapsed into a single space string. The trimming method in 2.0.0 and on removes this browser-specific behavior for a method that’s more universal.
+
+### Distinguished Literals
+The `literals` option lets you distinguish literal values specified by
+the developer from plain strings that might be attacker controlled.
+This allows an AST reconciler to exempt strings specified by the JSX
+fragment author from security checks.
+
+#### Options
+```json
+{
+  "plugins": [["transform-jsx", { "literals": "JSXLiteral" }]]
+}
+```
+
+#### JSX
+```jsx
+var untrustworthyInput = "alert('Have an awful day')"
+
+var links = [
+  <a href={untrustworthyInput}> :( </a>,
+  <a href="javascript:alert('Have a nice day')"> :) </a>
+]
+```
+
+#### JavaScript
+```js
+var untrustworthyInput = "alert('Have an awful day')"
+
+var links = [
+  {
+    elementName: 'a',
+    attributes: { href: untrustworthyInput },
+    children: [JSXLiteral(' :( ', '#text')]
+  },
+  {
+    elementName: 'a',
+    attributes: { href: JSXLiteral("javascript:alert('Have a nice day')", 'a href') },
+    children: [JSXLiteral(' :) ', '#text')]
+  },
+]
+```
+
+The function receives two strings: the literal text post any decoding,
+and a context hint.
 
 * * *
 
